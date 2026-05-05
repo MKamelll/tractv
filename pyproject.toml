@@ -1,0 +1,24 @@
+[project]
+name = "tractv"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django-cotton>=2.6.2",
+    "django-stubs>=6.0.3",
+    "django-stubs-ext>=6.0.3",
+]
+
+[dependency-groups]
+    "pylsp-mypy>=0.7.1",
+dev = [
+    "python-lsp-black>=2.0.0",
+    "python-lsp-server[all]>=1.14.0",
+]
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "tractv.settings"
