@@ -1,4 +1,5 @@
 from django.db import models
+from shows.models import Show
 
 
 # Create your models here.
@@ -10,3 +11,4 @@ class Season(models.Model):
     poster_path = models.CharField()
     season_number = models.IntegerField()
     vote_average = models.FloatField()
+    show = models.ForeignKey(to=Show, on_delete=models.CASCADE, related_name="seasons")
