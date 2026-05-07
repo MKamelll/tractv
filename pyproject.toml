@@ -8,11 +8,14 @@ dependencies = [
     "django-cotton>=2.6.2",
     "django-stubs>=6.0.3",
     "django-stubs-ext>=6.0.3",
+    "httpx>=0.28.1",
+    "pydantic>=2.13.4",
+    "python-dotenv>=1.2.2",
 ]
 
 [dependency-groups]
-    "pylsp-mypy>=0.7.1",
 dev = [
+    "pylsp-mypy>=0.7.1",
     "python-lsp-black>=2.0.0",
     "python-lsp-server[all]>=1.14.0",
 ]

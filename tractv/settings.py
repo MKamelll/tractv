@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "crew_members",
     "guest_stars",
     "profiles",
+    "api",
 ]
 
 MIDDLEWARE = [
