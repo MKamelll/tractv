@@ -3,7 +3,6 @@
     Dashboard
 {% endblock title %}
 {% block body %}
-    <c-common.navbar />
     <div class="flex flex-col gap-4 p-4">
         <c-common.card />
     </div>
