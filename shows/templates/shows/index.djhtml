@@ -14,57 +14,13 @@
                     <h1 class="text-sm">3 seasons</h1>
                     <h1 class="text-sm">18 episodes</h1>
                 </div>
-                <div class="rating">
-                    <input type="radio"
-                           name="rating-1"
-                           class="mask mask-star"
-                           aria-label="1 star" />
-                    <input type="radio"
-                           name="rating-1"
-                           class="mask mask-star"
-                           aria-label="2 star"
-                           checked="checked" />
-                    <input type="radio"
-                           name="rating-1"
-                           class="mask mask-star"
-                           aria-label="3 star" />
-                    <input type="radio"
-                           name="rating-1"
-                           class="mask mask-star"
-                           aria-label="4 star" />
-                    <input type="radio"
-                           name="rating-1"
-                           class="mask mask-star"
-                           aria-label="5 star" />
-                </div>
+                <c-shows.rating />
             </div>
             <p class="bg-base-200 p-4">
                 A gang of con men are victimising the local elderly. Philip thinks he can tell the sheep from the goats, but that's
                 before the intervention of the Divine Brotherhood of the Celestial Beacon.
             </p>
-            <div x-data="{season: '1'}" class="tabs tabs-border">
-                <input @click="season = '1'"
-                       type="radio"
-                       name="my_tabs_2"
-                       class="tab"
-                       aria-label="Season 1"
-                       :checked="season === '1' ? 'checked' : ''" />
-                <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 1</div>
-                <input @click="season = '2'"
-                       type="radio"
-                       name="my_tabs_2"
-                       class="tab"
-                       aria-label="Season 2"
-                       :checked="season === '2' ? 'checked' : ''" />
-                <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 2</div>
-                <input @click="season = '3'"
-                       type="radio"
-                       name="my_tabs_2"
-                       class="tab"
-                       aria-label="Season 3"
-                       :checked="season === '3' ? 'checked' : ''" />
-                <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 3</div>
-            </div>
+            <c-shows.tabs />
         </div>
     </div>
 {% endblock body %}

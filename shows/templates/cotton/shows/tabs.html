@@ -1,0 +1,25 @@
+<div x-data="{season: '1'}" class="tabs tabs-border">
+    <input @click="season = '1'"
+           type="radio"
+           name="my_tabs_2"
+           class="tab"
+           aria-label="Season 1"
+           :checked="season === '1' ? 'checked' : ''" />
+    <div class="tab-content bg-base-200 p-4 gap-4">
+        <c-shows.episode_section />
+    </div>
+    <input @click="season = '2'"
+           type="radio"
+           name="my_tabs_2"
+           class="tab"
+           aria-label="Season 2"
+           :checked="season === '2' ? 'checked' : ''" />
+    <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 2</div>
+    <input @click="season = '3'"
+           type="radio"
+           name="my_tabs_2"
+           class="tab"
+           aria-label="Season 3"
+           :checked="season === '3' ? 'checked' : ''" />
+    <div class="tab-content border-base-300 bg-base-100 p-10">Tab content 3</div>
+</div>
