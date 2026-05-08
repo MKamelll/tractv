@@ -60,4 +60,3 @@ class Api:
 
 
 api = Api()
-print(api.get_episode_details(2, 1, 1))

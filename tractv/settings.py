@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "guest_stars",
     "profiles",
     "api",
+    "common",
+    "dashboard",
 ]
 
 MIDDLEWARE = [

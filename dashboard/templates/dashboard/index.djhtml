@@ -1,0 +1,7 @@
+{% extends "common/base.djhtml" %}
+{% block title %}
+    Dashboard
+{% endblock title %}
+{% block body %}
+    <h1>fuck off</h1>
+{% endblock body %}
