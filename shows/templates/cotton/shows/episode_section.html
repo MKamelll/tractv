@@ -1,5 +1,5 @@
 <div x-data="{focused: false}"
-     class="flex flex-col h-full justify-start w-full gap-4">
+     class="flex flex-col h-full justify-start w-full gap-4 bg-base-300 p-4 rounded-lg">
     <div class="flex flex-row gap-4 h-full w-full items-start flex-1">
         <img src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
              alt="episode_still"
@@ -8,7 +8,7 @@
             <h1 class="text-xl font-serif">In the Beginning</h1>
             <p class="text-sm">Reverend Philip Lambe is transferred from his rich rural parish to a tough Midlands city.</p>
         </div>
-        <button class="btn btn-circle">
+        <button class="btn btn-circle bg-primary">
             <svg xmlns="http://www.w3.org/2000/svg"
                  fill="none"
                  viewBox="0 0 24 24"
@@ -19,11 +19,15 @@
             </svg>
         </button>
     </div>
-    <div class="collapse collapse-arrow w-full h-full border border-primary">
-        <input type="checkbox" />
+    <div class="collapse collapse-arrow bg-base-200">
+        <input type="checkbox" x-init="$el.checked = false" />
         <div class="collapse-title font-semibold">reviews</div>
         <div class="collapse-content">
             <c-shows.add_review />
+            <div class="divider"></div>
+            <div class="flex flex-col gap-4">
+                <c-shows.episode_comment />
+            </div>
         </div>
     </div>
 </div>
