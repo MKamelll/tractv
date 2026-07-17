@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import httpx
 import os
 from pydantic import BaseModel
-from models import (
+from pydantic_models import (
     SearchResult,
     Show,
     Season,

@@ -1,11 +1,11 @@
-{% extends "common/base.djhtml" %}
+{% extends "ui/base.djhtml" %}
 {% block title %}
     Shows
 {% endblock title %}
 {% block body %}
     <div class="flex flex-row gap-4 p-4 w-full">
         <div class="flex flex-col gap-4 h-screen">
-            <c-common.card />
+            <c-ui.card />
         </div>
         <div class="flex flex-col gap-4 h-screen flex-1">
             <div class="flex flex-row gap-4 items-end">
@@ -14,13 +14,13 @@
                     <h1 class="text-sm">3 seasons</h1>
                     <h1 class="text-sm">18 episodes</h1>
                 </div>
-                <c-shows.rating />
+                <c-ui-shows.rating />
             </div>
             <p class="bg-base-200 p-4">
                 A gang of con men are victimising the local elderly. Philip thinks he can tell the sheep from the goats, but that's
                 before the intervention of the Divine Brotherhood of the Celestial Beacon.
             </p>
-            <c-shows.tabs />
+            <c-ui-shows.tabs />
         </div>
     </div>
 {% endblock body %}

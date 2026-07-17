@@ -1,9 +1,0 @@
-{% extends "common/base.djhtml" %}
-{% block title %}
-    Dashboard
-{% endblock title %}
-{% block body %}
-    <div class="flex flex-col gap-4 p-4">
-        <c-common.card />
-    </div>
-{% endblock body %}

@@ -1,75 +1,59 @@
-from pydantic import BaseModel, model_validator
+from django.db import models
 
 
-class CrewMember(BaseModel):
-    id: int
-    department: str
-    job: str
-    known_for_department: str
-    name: str
-    original_name: str
-    profile_path: str | None = None
+class Show(models.Model):
+    themoviedb_id = models.IntegerField()
+    name = models.CharField(max_length=255)
+    number_of_episodes = models.IntegerField()
+    number_of_seasons = models.IntegerField()
+    origin_country = models.CharField(max_length=255)
+    original_language = models.CharField(max_length=255)
+    original_name = models.CharField(max_length=255)
+    overview = models.TextField(blank=True)
+    poster_path = models.CharField(max_length=255)
+    vote_average = models.FloatField()
+    vote_count = models.IntegerField()
 
 
-class GuestStar(BaseModel):
-    id: int
-    character: str
-    known_for_department: str
-    name: str
-    original_name: str
-    profile_path: str | None = None
+class Season(models.Model):
+    themoviedb_id = models.IntegerField()
+    episode_count = models.IntegerField()
+    name = models.CharField(max_length=255)
+    overview = models.TextField(blank=True)
+    poster_path = models.CharField()
+    season_number = models.IntegerField()
+    vote_average = models.FloatField()
+    show = models.ForeignKey(to=Show, on_delete=models.CASCADE, related_name="seasons")
 
 
-class Episode(BaseModel):
-    id: int
-    episode_type: str
-    episode_number: int
-    name: str
-    overview: str
-    season_number: int
-    show_id: int | None = None
-    still_path: str | None = None
-    vote_average: float
-    vote_count: int
-    crew: list[CrewMember] | None = None
-    guests: list[GuestStar] | None = None
+class CrewMember(models.Model):
+    themoviedb_id = models.IntegerField()
+    department = models.CharField(max_length=255)
+    job = models.CharField(max_length=255)
+    known_for_department = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    original_name = models.CharField(max_length=255)
+    profile_path = models.CharField(max_length=255)
 
 
-class Season(BaseModel):
-    id: int
-    episode_count: int
-    name: str
-    overview: str
-    poster_path: str | None = None
-    season_number: int
-    vote_average: float
-    episodes: list[Episode]
+class GuestStar(models.Model):
+    themoviedb_id = models.IntegerField()
+    character = models.CharField(max_length=255)
+    known_for_department = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    original_name = models.CharField(max_length=255)
+    profile_path = models.CharField(max_length=255)
 
 
-class Show(BaseModel):
-    id: int
-    number_of_episodes: int
-    number_of_seasons: int
-    origin_country: list[str]
-    original_language: str
-    original_name: str
-    overview: str
-    poster_path: str | None = None
-    name: str
-    vote_average: float
-    vote_count: int
-    seasons: list[Season]
-
-
-class SearchResult(BaseModel):
-    page: int
-    results: list[Show]
-
-
-class Success[T](BaseModel):
-    data: T
-
-
-class Failure(BaseModel):
-    status_code: int
-    status_message: str
+class Episode(models.Model):
+    themoviedb_id = models.IntegerField()
+    episode_type = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    overview = models.TextField(blank=True)
+    season_number = models.IntegerField()
+    show = models.ForeignKey(to=Show, on_delete=models.CASCADE, related_name="episodes")
+    still_path = models.CharField(max_length=255)
+    vote_average = models.FloatField()
+    vote_count = models.IntegerField()
+    crew = models.ManyToManyField(to=CrewMember, related_name="episodes")
+    guests = models.ManyToManyField(to=GuestStar, related_name="episodes")

@@ -40,15 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "shows",
-    "seasons",
-    "episodes",
-    "crew_members",
-    "guest_stars",
-    "profiles",
+    "ui",
     "api",
-    "common",
-    "dashboard",
     "django_cotton",
 ]
 
