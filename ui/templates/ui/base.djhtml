@@ -4,7 +4,7 @@
         {% load static %}
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{% static "common/css/output.css" %}">
+        <link rel="stylesheet" href="{% static "ui/css/output.css" %}">
         <script src="{% static 'htmx.org/dist/htmx.min.js' %}"></script>
         <script defer src="{% static 'alpinejs/dist/cdn.min.js' %}"></script>
         <title>
@@ -14,7 +14,7 @@
         </title>
     </head>
     <body>
-        <c-common.navbar />
+        <c-ui.navbar />
         {% block body %}
         {% endblock body %}
     </body>

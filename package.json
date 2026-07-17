@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "server": "python3 manage.py runserver",
-    "css": "npx @tailwindcss/cli -i ./common/static/common/css/input.css -o ./common/static/common/css/output.css --watch",
+    "css": "npx @tailwindcss/cli -i ./ui/static/ui/css/input.css -o ./ui/static/ui/css/output.css --watch",
     "dev": "concurrently --raw 'npm run server' 'npm run css'"
   },
   "repository": {
