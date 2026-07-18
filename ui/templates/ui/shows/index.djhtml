@@ -1,6 +1,6 @@
 {% extends "ui/base.djhtml" %}
 {% block title %}
-    Shows
+    {{ show.name }}
 {% endblock title %}
 {% block body %}
     <div class="flex flex-row gap-4 p-4 w-full">
@@ -10,16 +10,13 @@
         <div class="flex flex-col gap-4 h-screen flex-1">
             <div class="flex flex-row gap-4 items-end">
                 <div class="flex flex-row items-end gap-4 flex-1">
-                    <h1 class="text-5xl font-serif">False Profits</h1>
-                    <h1 class="text-sm">3 seasons</h1>
-                    <h1 class="text-sm">18 episodes</h1>
+                    <h1 class="text-5xl font-serif">{{ show.name }}</h1>
+                    <h1 class="text-sm">{{ show.number_of_seasons }} seasons</h1>
+                    <h1 class="text-sm">{{ show.number_of_episodes }} episodes</h1>
                 </div>
                 <c-ui.shows.rating />
             </div>
-            <p class="bg-base-200 p-4">
-                A gang of con men are victimising the local elderly. Philip thinks he can tell the sheep from the goats, but that's
-                before the intervention of the Divine Brotherhood of the Celestial Beacon.
-            </p>
+            <p class="bg-base-200 p-4">{{ show.overview }}</p>
             <c-ui.shows.tabs />
         </div>
     </div>

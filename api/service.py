@@ -2,8 +2,8 @@ from dotenv import load_dotenv
 import httpx
 import os
 from pydantic import BaseModel
-from pydantic_models import (
-    SearchResult,
+from .pydantic_models import (
+    SearchResults,
     Show,
     Season,
     Episode,
@@ -25,22 +25,27 @@ class Api:
     def get[T: BaseModel](
         self,
         endpoint: str,
-        model: T,
-        params: dict[str, str] = {},
-        headers: dict[str, str] = {},
+        model: type[T],
+        params: dict[str, str] | None = None,
+        headers: dict[str, str] | None = None,
     ) -> Success | Failure:
+        if not headers:
+            headers = {}
+        if not params:
+            params = {}
         headers["accept"] = "application/json"
         headers["Authorization"] = "Bearer " + self.api_access_token
         res = httpx.get(self.base_url + endpoint, params=params, headers=headers)
-        json = res.json()
+        res_json = res.json()
         if not res.is_success:
             return Failure(
-                status_code=json["status_code"], status_message=json["status_message"]
+                status_code=res_json["status_code"],
+                status_message=res_json["status_message"],
             )
-        return Success(data=model.model_validate(json))
+        return Success(data=model.model_validate(res_json))
 
-    def search_for_show(self, query: str) -> Success[SearchResult] | Failure:
-        return self.get("/search/tv", params={"query": query}, model=SearchResult)
+    def search_for_show(self, query: str) -> Success[SearchResults] | Failure:
+        return self.get("/search/tv", params={"query": query}, model=SearchResults)
 
     def get_show_details(self, series_id: int) -> Success[Show] | Failure:
         return self.get(f"/tv/{series_id}", model=Show)

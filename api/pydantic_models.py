@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 
 class CrewMember(BaseModel):
@@ -34,22 +34,37 @@ class Episode(BaseModel):
     crew: list[CrewMember] | None = None
     guests: list[GuestStar] | None = None
 
+    @field_validator("still_path")
+    @classmethod
+    def build_still_path(cls, v: str | None) -> str | None:
+        if v is None:
+            return None
+        return f"https://image.tmdb.org/t/p/w300{v}"
 
-class Season(BaseModel):
+
+class SeasonBasic(BaseModel):
     id: int
-    episode_count: int
     name: str
     overview: str
     poster_path: str | None = None
     season_number: int
     vote_average: float
+    episode_count: int
+
+    @field_validator("poster_path")
+    @classmethod
+    def build_poster_path(cls, v: str | None) -> str | None:
+        if v is None:
+            return None
+        return f"https://image.tmdb.org/t/p/w300{v}"
+
+
+class Season(SeasonBasic):
     episodes: list[Episode]
 
 
-class Show(BaseModel):
+class ShowBasic(BaseModel):
     id: int
-    number_of_episodes: int
-    number_of_seasons: int
     origin_country: list[str]
     original_language: str
     original_name: str
@@ -58,12 +73,24 @@ class Show(BaseModel):
     name: str
     vote_average: float
     vote_count: int
-    seasons: list[Season]
+
+    @field_validator("poster_path")
+    @classmethod
+    def build_poster_path(cls, v: str | None) -> str | None:
+        if v is None:
+            return None
+        return f"https://image.tmdb.org/t/p/w300{v}"
 
 
-class SearchResult(BaseModel):
+class Show(ShowBasic):
+    number_of_episodes: int
+    number_of_seasons: int
+    seasons: list[SeasonBasic]
+
+
+class SearchResults(BaseModel):
     page: int
-    results: list[Show]
+    results: list[ShowBasic]
 
 
 class Success[T](BaseModel):
