@@ -8,7 +8,7 @@
                    aria-label="Season {{ season.season_number }}"
                    :checked="season === '{{ season.season_number }}' ? 'checked' : ''" />
             <div class="tab-content gap-4">
-                <c-ui.shows.episode_section />
+                <c-ui.shows.season />
             </div>
         {% endfor %}
     </div>
