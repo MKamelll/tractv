@@ -1,10 +1,12 @@
 <div class="flex flex-row gap-4 h-full w-full items-start flex-1">
-    <img src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
-         alt="episode_still"
-         class="h-32 w-22">
+    {% if episode.still_path %}
+        <img src="{{ episode.still_path }}"
+             alt="episode_still"
+             class="w-auto h-auto">
+    {% endif %}
     <div class="flex flex-col gap-4 flex-1">
-        <h1 class="text-xl font-serif">In the Beginning</h1>
-        <p class="text-sm">Reverend Philip Lambe is transferred from his rich rural parish to a tough Midlands city.</p>
+        <h1 class="text-xl font-serif">{{ episode.name }}</h1>
+        <p class="text-sm">{{ episode.overview }}</p>
     </div>
     <button class="btn btn-circle bg-primary">
         <svg xmlns="http://www.w3.org/2000/svg"
