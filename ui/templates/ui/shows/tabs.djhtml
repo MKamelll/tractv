@@ -1,5 +1,5 @@
 {% if show.number_of_seasons > 0 %}
-    <div x-data="{season: '1'}" class="tabs tabs-border">
+    <div x-data="{season: '1', loading: false}" class="tabs tabs-border">
         {% for season in show.seasons %}
             <input x-model="season"
                    type="radio"
@@ -11,7 +11,13 @@
             <div class="tab-content gap-4"
                  hx-get="{% url 'season' show.id season.season_number %}"
                  hx-trigger="season-{{ season.season_number }}-active from:body once {% if forloop.first %}, load{% endif %}"
-                 hx-target="this"></div>
+                 hx-target="this"
+                 @htmx:before-request="loading = true"
+                 @htmx:after-request="loading = false">
+                <div class="flex justify-center items-center min-h-32">
+                    <span x-show="loading" class="loading loading-spinner loading-xl"></span>
+                </div>
+            </div>
         {% endfor %}
     </div>
 {% endif %}
