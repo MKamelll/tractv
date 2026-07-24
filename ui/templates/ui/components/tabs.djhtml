@@ -7,9 +7,7 @@
                    class="tab"
                    aria-label="{{ season.name }}"
                    :checked="season === '{{ season.season_number }}' ? 'checked' : ''" />
-            <div class="tab-content gap-4">
-                <c-ui.shows.season />
-            </div>
+            <div class="tab-content gap-4">{% include "ui/components/season.djhtml" %}</div>
         {% endfor %}
     </div>
 {% endif %}

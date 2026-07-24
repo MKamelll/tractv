@@ -14,7 +14,7 @@
         </title>
     </head>
     <body>
-        <c-ui.navbar />
+        {% include "ui/components/navbar.djhtml" %}
         {% block body %}
         {% endblock body %}
     </body>

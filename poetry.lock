@@ -246,21 +246,6 @@ argon2 = ["argon2-cffi (>=23.1.0)"]
 bcrypt = ["bcrypt (>=4.1.1)"]
 
 [[package]]
-name = "django-cotton"
-version = "2.7.2"
-description = "Enabling Modern UI Composition in Django."
-optional = false
-python-versions = "<4,>=3.8"
-groups = ["main"]
-files = [
-    {file = "django_cotton-2.7.2-py3-none-any.whl", hash = "sha256:1b293037ead54ab228362654da00ededc5ca52b2ff407b6087a81cfd9390850e"},
-    {file = "django_cotton-2.7.2.tar.gz", hash = "sha256:7e050042873f724beaa5824e86d5034ced2f7de1c5478c3a9d8c053e05caa8ac"},
-]
-
-[package.dependencies]
-django = ">=4.2,<7.0"
-
-[[package]]
 name = "django-stubs"
 version = "6.0.7"
 description = "Mypy stubs for Django"
@@ -1416,4 +1401,4 @@ type = ["pytest-mypy (>=1.0.1) ; platform_python_implementation != \"PyPy\""]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14,<4"
-content-hash = "5d6336052f8e1c58597873b332751eda10c3b94d65f63a8d178a60e3a9b92f44"
+content-hash = "9f4a2ba2bae87547ba89f87e9ce3fc4610bd7fbc59a74b89502f9ad543d824fb"

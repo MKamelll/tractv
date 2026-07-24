@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ui",
     "api",
-    "django_cotton",
 ]
 
 MIDDLEWARE = [
