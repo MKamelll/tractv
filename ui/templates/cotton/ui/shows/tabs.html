@@ -5,7 +5,7 @@
                    type="radio"
                    name="my_tabs_2"
                    class="tab"
-                   aria-label="Season {{ season.season_number }}"
+                   aria-label="{{ season.name }}"
                    :checked="season === '{{ season.season_number }}' ? 'checked' : ''" />
             <div class="tab-content gap-4">
                 <c-ui.shows.season />

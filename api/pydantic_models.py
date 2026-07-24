@@ -87,6 +87,17 @@ class Show(ShowBasic):
     number_of_seasons: int
     seasons: list[SeasonBasic]
 
+    @field_validator("seasons")
+    @classmethod
+    def build_seasons(cls, v: list[SeasonBasic]) -> list[SeasonBasic]:
+        if len(v) < 1:
+            return v
+        if v[0].season_number == 0:
+            specials_season = v[0].model_copy(update={"name": "Specials"})
+            v = v[1:]
+            v.append(specials_season)
+        return v
+
 
 class SearchResults(BaseModel):
     page: int

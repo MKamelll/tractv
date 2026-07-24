@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from api.service import api
-from api.pydantic_models import Success, Failure
+from api.pydantic_models import Success, Failure, Show
 
 
 def shows(req: HttpRequest, show_id: int) -> HttpResponse:
