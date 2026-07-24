@@ -15,3 +15,16 @@ def shows(req: HttpRequest, show_id: int) -> HttpResponse:
             )
         case Failure(status_code=code, status_message=msg):
             return HttpResponse(msg, status=code)
+
+
+def season(req: HttpRequest, show_id: int, season_number: int) -> HttpResponse:
+    res = api.get_season_details(show_id, season_number)
+    match res:
+        case Success(data=season):
+            return render(
+                request=req,
+                template_name="ui/shows/season.djhtml",
+                context={"season": season},
+            )
+        case Failure(status_code=code, status_message=msg):
+            return HttpResponse(msg, status=code)

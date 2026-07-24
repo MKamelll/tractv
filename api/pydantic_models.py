@@ -49,7 +49,7 @@ class SeasonBasic(BaseModel):
     poster_path: str | None = None
     season_number: int
     vote_average: float
-    episode_count: int
+    episode_count: int | None = None
 
     @field_validator("poster_path")
     @classmethod

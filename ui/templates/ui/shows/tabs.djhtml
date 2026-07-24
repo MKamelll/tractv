@@ -1,13 +1,17 @@
 {% if show.number_of_seasons > 0 %}
     <div x-data="{season: '1'}" class="tabs tabs-border">
         {% for season in show.seasons %}
-            <input @click="season = '{{ season.season_number }}'"
+            <input x-model="season"
                    type="radio"
                    name="my_tabs_2"
                    class="tab"
                    aria-label="{{ season.name }}"
-                   :checked="season === '{{ season.season_number }}' ? 'checked' : ''" />
-            <div class="tab-content gap-4">{% include "ui/shows/season.djhtml" %}</div>
+                   value="{{ season.season_number }}"
+                   @change="$dispatch('season-{{ season.season_number }}-active')" />
+            <div class="tab-content gap-4"
+                 hx-get="{% url 'season' show.id season.season_number %}"
+                 hx-trigger="season-{{ season.season_number }}-active from:body once {% if forloop.first %}, load{% endif %}"
+                 hx-target="this"></div>
         {% endfor %}
     </div>
 {% endif %}
