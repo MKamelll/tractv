@@ -1,0 +1,6 @@
+{% extends "ui/base.djhtml" %}
+{% block title %}
+    Dashboard
+{% endblock title %}
+{% block body %}
+{% endblock body %}

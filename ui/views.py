@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from api.service import api
-from api.pydantic_models import Success, Failure, Show
+from api.pydantic_models import Success, Failure, SearchResults
 
 
 def shows(req: HttpRequest, show_id: int) -> HttpResponse:
@@ -25,6 +25,24 @@ def season(req: HttpRequest, show_id: int, season_number: int) -> HttpResponse:
                 request=req,
                 template_name="ui/shows/season.djhtml",
                 context={"season": season},
+            )
+        case Failure(status_code=code, status_message=msg):
+            return HttpResponse(msg, status=code)
+
+
+def dashboard(req: HttpRequest) -> HttpResponse:
+    return render(request=req, template_name="ui/dashboard/index.djhtml")
+
+
+def search(req: HttpRequest) -> HttpResponse:
+    query = req.POST.get("q", "")
+    res = api.search_for_show(query)
+    match res:
+        case Success(data=SearchResults(results=shows)):
+            return render(
+                request=req,
+                template_name="ui/partials/search_result.djhtml",
+                context={"shows": shows},
             )
         case Failure(status_code=code, status_message=msg):
             return HttpResponse(msg, status=code)

@@ -1,0 +1,11 @@
+{% for show in shows %}
+    <li class="px-4 py-2 hover:bg-base-200 cursor-pointer flex items-center gap-2"
+        hx-get="{% url 'shows' show.id %}"
+        hx-target="#selected-item"
+        hx-swap="innerHTML"
+        @click="open = false">
+        <span>{{ show.name }}</span>
+    </li>
+{% empty %}
+    <li class="px-4 py-2 text-sm opacity-60">No results found.</li>
+{% endfor %}

@@ -1,0 +1,48 @@
+<div x-data="{ open: false }"
+     @keydown.window.prevent.cmd.k="open = true"
+     @keydown.window.prevent.ctrl.k="open = true">
+    <!-- Trigger button -->
+    <button @click="open = true" class="btn btn-ghost">
+        <span>Search...</span>
+        <kbd class="kbd kbd-sm">Ctrl K</kbd>
+    </button>
+    <!-- Modal -->
+    <div x-show="open"
+         x-cloak
+         class="modal modal-open"
+         @keydown.escape.window="open = false">
+        <div class="modal-box p-0 max-w-xl" @click.outside="open = false">
+            <form class="border-b border-base-300">
+                {% csrf_token %}
+                <input hx-post="{% url 'search' %}"
+                       hx-target="#results"
+                       hx-swap="innerHTML"
+                       type="text"
+                       name="q"
+                       placeholder="Search..."
+                       autocomplete="off"
+                       autofocus
+                       x-ref="searchInput"
+                       x-init="$watch('open', value => value && $nextTick(() => $refs.searchInput.focus()))"
+                       @keydown.arrow-down.prevent="moveDown()"
+                       @keydown.arrow-up.prevent="moveUp()"
+                       hx-trigger="keyup changed delay:300ms"
+                       class="input input-lg w-full border-0 focus:outline-none" />
+            </form>
+            <ul id="results" class="max-h-80 overflow-y-auto py-2">
+                <!-- htmx swaps results here -->
+            </ul>
+            <div class="px-4 py-2 border-t border-base-300 text-xs opacity-60 flex gap-3">
+                <span>
+                    <kbd class="kbd kbd-xs">↑</kbd>
+                    <kbd class="kbd kbd-xs">↓</kbd>
+                    to navigate
+                </span>
+                <span><kbd class="kbd kbd-xs">Enter</kbd> to select</span>
+                <span><kbd class="kbd kbd-xs">Esc</kbd> to close</span>
+            </div>
+        </div>
+        <!-- backdrop -->
+        <div class="modal-backdrop" @click="open = false"></div>
+    </div>
+</div>

@@ -5,9 +5,7 @@
         <a class="btn btn-outline btn-primary">profile</a>
     </div>
     <div class="flex gap-2">
-        <input type="text"
-               placeholder="Search"
-               class="input input-bordered w-24 md:w-auto" />
+        {% include "ui/components/search_modal.djhtml" %}
         <a class="btn btn-outline btn-error">logout</a>
     </div>
 </div>
