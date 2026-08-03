@@ -1,0 +1,7 @@
+<div x-data="{query: ''}" class="relative">
+    <input class="input"
+           type="search"
+           required
+           placeholder="Search..."
+           x-model="query" />
+</div>
