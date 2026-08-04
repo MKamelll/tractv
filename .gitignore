@@ -15,3 +15,5 @@ wheels/
 *.sqlite3
 node_modules
 output.css
+
+.vscode

@@ -1,7 +1,63 @@
-<div x-data="{query: ''}" class="relative">
+<div x-data="search()" class="relative">
     <input class="input"
            type="search"
            required
            placeholder="Search..."
-           x-model="query" />
+           name="q"
+           hx-get="{% url 'search' %}"
+           hx-trigger="input changed delay:300ms[target.value.length >= 2], focus[target.value.length >= 2]"
+           hx-target="#search-results"
+           hx-swap="innerHTML"
+           x-ref="searchInput"
+           x-on:keydown.window.slash="onSlash($event)"
+           x-on:input="open = true"
+           x-on:click.away="open = false"
+           x-on:focus="open = true"
+           x-on:keydown.down.prevent="move(1)"
+           x-on:keydown.up.prevent="move(-1)"
+           x-on:keydown.enter.prevent="selectActive()"
+           x-on:keydown.escape="open = false"
+           autocomplete="off" />
+    <div id="search-results"
+         x-ref="searchResults"
+         x-show="open"
+         x-cloak
+         class="absolute z-50 mt-1 w-full bg-base-100 shadow-lg rounded-box max-h-80 overflow-y-auto"
+         @htmx:after-swap="$dispatch('search-results-updated')"></div>
 </div>
+<script>
+    function search() {
+        return {
+            activeIndex: -1,
+            open: false,
+            init() {
+                this.$el.addEventListener("search-results-updated", () => {
+                    this.activeIndex = -1;
+                });
+            },
+            get items() {
+                return this.$refs.searchResults?.querySelectorAll('[data-search-item]') ?? [];
+            },
+            move(dir) {
+                if (!this.items.length) return;
+                this.activeIndex = (this.activeIndex+dir+this.items.length) % this.items.length;
+                this.highlightActive();
+            },
+            selectActive() {
+                this.items[this.activeIndex]?.click();
+            },
+            highlightActive() {
+                this.items.forEach((el, i) => {
+                    el.classList.toggle("bg-primary", i === this.activeIndex);
+                });
+                this.items[this.activeIndex]?.scrollIntoView({block: "nearest"})
+            },
+            onSlash(event) {
+                const tag = document.activeElement?.tagName;
+                if (tag === "INPUT" || tag === "TEXTAREA") return;
+                event.preventDefault();
+                this.$refs.searchInput?.focus();
+            }
+        }
+    }
+</script>

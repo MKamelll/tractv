@@ -1,0 +1,11 @@
+{% if results %}
+    <ul class="menu">
+        {% for r in results %}
+            <li>
+                <a href="{% url 'shows' r.id %}"
+                   data-search-item
+                   class="flex justify-between">{{ r.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

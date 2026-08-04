@@ -35,14 +35,14 @@ def dashboard(req: HttpRequest) -> HttpResponse:
 
 
 def search(req: HttpRequest) -> HttpResponse:
-    query = req.POST.get("q", "")
+    query = req.GET.get("q", "")
     res = api.search_for_show(query)
     match res:
-        case Success(data=SearchResults(results=shows)):
+        case Success(data=SearchResults(results=results)):
             return render(
                 request=req,
-                template_name="ui/partials/search_result.djhtml",
-                context={"shows": shows},
+                template_name="ui/partials/search_results.djhtml",
+                context={"results": results},
             )
         case Failure(status_code=code, status_message=msg):
             return HttpResponse(msg, status=code)
