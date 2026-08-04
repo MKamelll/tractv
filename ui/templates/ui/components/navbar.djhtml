@@ -3,7 +3,23 @@
         <a href="{% url 'dashboard' %}" class="btn btn-ghost text-xl">tractv</a>
         {% include "ui/components/search_bar.djhtml" %}
     </div>
-    <div class="flex gap-2">
-        <a class="btn btn-outline btn-error">logout</a>
+    <div class="dropdown dropdown-end">
+        <div tabindex="0">
+            <button class="border border-primary btn-circle btn-md">
+                <span>M</span>
+            </button>
+        </div>
+        <ul tabindex="-1"
+            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            <li class="hover:bg-primary">
+                <a>Profile</a>
+            </li>
+            <li class="hover:bg-primary">
+                <a>Settings</a>
+            </li>
+            <li class="hover:bg-primary">
+                <a>Logout</a>
+            </li>
+        </ul>
     </div>
 </div>
