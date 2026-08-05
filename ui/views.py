@@ -39,10 +39,17 @@ def search(req: HttpRequest) -> HttpResponse:
     res = api.search_for_show(query)
     match res:
         case Success(data=SearchResults(results=results)):
-            return render(
-                request=req,
-                template_name="ui/partials/search_results.djhtml",
-                context={"results": results},
-            )
+            if len(results) > 0:
+                return render(
+                    request=req,
+                    template_name="ui/partials/search_results.djhtml",
+                    context={"results": results},
+                )
+            else:
+                return render(
+                    request=req,
+                    template_name="ui/partials/search_results.djhtml",
+                    context={"query": query}
+                )
         case Failure(status_code=code, status_message=msg):
             return HttpResponse(msg, status=code)

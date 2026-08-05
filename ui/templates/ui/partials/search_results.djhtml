@@ -8,4 +8,6 @@
             </li>
         {% endfor %}
     </ul>
+{% elif query %}
+    <div class="p-4 text-sm text-base-content/60">No results for "{{ query }}"</div>
 {% endif %}
