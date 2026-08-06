@@ -20,6 +20,7 @@ dev = [
 ]
 
 [tool.mypy]
+strict = true
 plugins = ["mypy_django_plugin.main", "pydantic.mypy"]
 
 [tool.django-stubs]

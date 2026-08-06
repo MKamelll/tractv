@@ -17,7 +17,7 @@ load_dotenv()
 
 
 class Api:
-    def __init__(self):
+    def __init__(self) -> None:
         self.api_key = os.getenv("api_key")
         self.api_access_token = os.getenv("api_access_token")
         self.base_url = "https://api.themoviedb.org/3"
@@ -28,12 +28,14 @@ class Api:
         model: type[T],
         params: dict[str, str] | None = None,
         headers: dict[str, str] | None = None,
-    ) -> Success | Failure:
+    ) -> Success[T] | Failure:
         if not headers:
             headers = {}
         if not params:
             params = {}
         headers["accept"] = "application/json"
+        if not self.api_access_token:
+            raise Exception("invalid creds when trying to make a request")
         headers["Authorization"] = "Bearer " + self.api_access_token
         res = httpx.get(self.base_url + endpoint, params=params, headers=headers)
         res_json = res.json()
