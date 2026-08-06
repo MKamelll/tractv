@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from api.service import api
-from api.pydantic_models import Success, Failure, SearchResults
+from api.schemas import Success, Failure, SearchResults
 
 
 def shows(req: HttpRequest, show_id: int) -> HttpResponse:
@@ -49,7 +49,7 @@ def search(req: HttpRequest) -> HttpResponse:
                 return render(
                     request=req,
                     template_name="ui/partials/search_results.djhtml",
-                    context={"query": query}
+                    context={"query": query},
                 )
         case Failure(status_code=code, status_message=msg):
             return HttpResponse(msg, status=code)

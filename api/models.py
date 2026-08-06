@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Show(models.Model):
-    themoviedb_id = models.IntegerField()
+    tmdb_id = models.IntegerField()
     name = models.CharField(max_length=255)
     number_of_episodes = models.IntegerField()
     number_of_seasons = models.IntegerField()
@@ -16,7 +16,7 @@ class Show(models.Model):
 
 
 class Season(models.Model):
-    themoviedb_id = models.IntegerField()
+    tmdb_id = models.IntegerField()
     episode_count = models.IntegerField()
     name = models.CharField(max_length=255)
     overview = models.TextField(blank=True)
@@ -27,7 +27,7 @@ class Season(models.Model):
 
 
 class CrewMember(models.Model):
-    themoviedb_id = models.IntegerField()
+    tmdb_id = models.IntegerField()
     department = models.CharField(max_length=255)
     job = models.CharField(max_length=255)
     known_for_department = models.CharField(max_length=255)
@@ -37,7 +37,7 @@ class CrewMember(models.Model):
 
 
 class GuestStar(models.Model):
-    themoviedb_id = models.IntegerField()
+    tmdb_id = models.IntegerField()
     character = models.CharField(max_length=255)
     known_for_department = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
@@ -46,7 +46,7 @@ class GuestStar(models.Model):
 
 
 class Episode(models.Model):
-    themoviedb_id = models.IntegerField()
+    tmdb_id = models.IntegerField()
     episode_type = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     overview = models.TextField(blank=True)
