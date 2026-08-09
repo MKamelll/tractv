@@ -101,11 +101,9 @@ class Show(ShowBasic):
 
 class SearchResults(BaseModel):
     page: int
+    total_pages: int
+    total_results: int
     results: list[ShowBasic]
-
-
-class Success[T](BaseModel):
-    data: T
 
 
 class Failure(BaseModel):

@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Show(models.Model):
-    tmdb_id = models.IntegerField()
+    tmdb_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=255)
     number_of_episodes = models.IntegerField()
     number_of_seasons = models.IntegerField()
@@ -16,7 +16,7 @@ class Show(models.Model):
 
 
 class Season(models.Model):
-    tmdb_id = models.IntegerField()
+    tmdb_id = models.IntegerField(unique=True)
     episode_count = models.IntegerField()
     name = models.CharField(max_length=255)
     overview = models.TextField(blank=True)
@@ -27,7 +27,7 @@ class Season(models.Model):
 
 
 class CrewMember(models.Model):
-    tmdb_id = models.IntegerField()
+    tmdb_id = models.IntegerField(unique=True)
     department = models.CharField(max_length=255)
     job = models.CharField(max_length=255)
     known_for_department = models.CharField(max_length=255)
@@ -37,7 +37,7 @@ class CrewMember(models.Model):
 
 
 class GuestStar(models.Model):
-    tmdb_id = models.IntegerField()
+    tmdb_id = models.IntegerField(unique=True)
     character = models.CharField(max_length=255)
     known_for_department = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
@@ -46,11 +46,14 @@ class GuestStar(models.Model):
 
 
 class Episode(models.Model):
-    tmdb_id = models.IntegerField()
+    tmdb_id = models.IntegerField(unique=True)
     episode_type = models.CharField(max_length=255)
+    episode_number = models.IntegerField()
     name = models.CharField(max_length=255)
     overview = models.TextField(blank=True)
-    season_number = models.IntegerField()
+    season = models.ForeignKey(
+        to=Season, related_name="episodes", on_delete=models.CASCADE
+    )
     show = models.ForeignKey(to=Show, on_delete=models.CASCADE, related_name="episodes")
     still_path = models.CharField(max_length=255)
     vote_average = models.FloatField()

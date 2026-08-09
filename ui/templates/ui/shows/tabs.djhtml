@@ -1,6 +1,6 @@
 {% if show.number_of_seasons > 0 %}
     <div x-data="{season: '1', loading: false}" class="tabs tabs-border">
-        {% for season in show.seasons %}
+        {% for season in seasons %}
             <input x-model="season"
                    type="radio"
                    name="my_tabs_2"

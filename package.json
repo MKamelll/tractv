@@ -4,7 +4,7 @@
   "description": "tv progress tracker",
   "main": "index.js",
   "scripts": {
-    "server": "python3 manage.py runserver",
+    "server": "python3 -u manage.py runserver",
     "css": "npx @tailwindcss/cli -i ./ui/static/ui/css/input.css -o ./ui/static/ui/css/output.css --watch",
     "dev": "concurrently --raw 'npm run server' 'npm run css'"
   },
