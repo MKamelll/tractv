@@ -1,0 +1,39 @@
+{% extends "ui/base.djhtml" %}
+{% block title %}
+    SignUp
+{% endblock title %}
+{% block body %}
+    <form method="post"
+          class="flex flex-col justify-center items-center min-h-screen">
+        {% csrf_token %}
+        <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+            <legend class="fieldset-legend">SignUp</legend>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}<p class="text-error text-sm">{{ error }}</p>{% endfor %}
+            {% endif %}
+            <label for="{{ form.email.id_for_label }}" class="label">Email</label>
+            <input id="{{ form.email.id_for_label }}"
+                   type="email"
+                   class="input"
+                   placeholder="Email"
+                   name="email"
+                   value="{{ form.email.value|default:'' }}" />
+            {% for error in form.email.errors %}<p class="text-sm text-error">{{ error }}</p>{% endfor %}
+            <label for="{{ form.password1.id_for_label }}" class="label">Password</label>
+            <input type="password"
+                   class="input"
+                   placeholder="Password"
+                   name="password1"
+                   id="{{ form.password1.id_for_label }}" />
+            {% for error in form.password1.errors %}<p class="text-sm text-error">{{ error }}</p>{% endfor %}
+            <label for="{{ form.password2.id_for_label }}" class="label">Confirm Password</label>
+            <input type="password"
+                   class="input"
+                   name="password2"
+                   placeholder="Confirm Password"
+                   id="{{ form.password2.id_for_label }}" />
+            {% for error in form.password2.errors %}<p class="text-error text-sm">{{ error }}</p>{% endfor %}
+            <button type="submit" class="btn btn-neutral mt-4">SignUp</button>
+        </fieldset>
+    </form>
+{% endblock body %}

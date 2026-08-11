@@ -43,7 +43,17 @@ INSTALLED_APPS = [
     "ui",
     "api",
     "profiles",
+    "allauth",
+    "allauth.account",
 ]
+
+AUTHENTICATION_BACKENDS: list[str] = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by email
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -53,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "tractv.urls"
@@ -126,3 +137,15 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
     BASE_DIR / "node_modules",
 ]
+
+# allauth
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_UNIQUE_EMAIL = True
+
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+
+# dev — verification emails print to the runserver console
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

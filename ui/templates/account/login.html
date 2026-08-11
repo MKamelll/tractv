@@ -1,0 +1,36 @@
+{% extends "ui/base.djhtml" %}
+{% block title %}
+    Log In
+{% endblock title %}
+{% block body %}
+    <form method="post"
+          class="flex flex-col justify-center items-center min-h-screen">
+        {% csrf_token %}
+        <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+            <legend class="fieldset-legend">Log In</legend>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}<p class="text-error text-sm">{{ error }}</p>{% endfor %}
+            {% endif %}
+            <label for="{{ form.login.id_for_label }}" class="label">Email</label>
+            <input id="{{ form.login.id_for_label }}"
+                   type="email"
+                   class="input"
+                   placeholder="Email"
+                   name="login"
+                   value="{{ form.login.value|default:'' }}" />
+            {% for error in form.login.errors %}<p class="text-sm text-error">{{ error }}</p>{% endfor %}
+            <label for="{{ form.password.id_for_label }}" class="label">Password</label>
+            <input type="password"
+                   class="input"
+                   placeholder="Password"
+                   name="password"
+                   id="{{ form.password.id_for_label }}" />
+            {% for error in form.password.errors %}<p class="text-sm text-error">{{ error }}</p>{% endfor %}
+            <button type="submit" class="btn btn-neutral mt-4">Log In</button>
+        </fieldset>
+        <p class="text text-sm">
+            don't have an account,
+            <a class="text-primary" href="{% url 'account_signup' %}">SignUp</a>
+        </p>
+    </form>
+{% endblock body %}

@@ -3,4 +3,5 @@
     Dashboard
 {% endblock title %}
 {% block body %}
+    {% include "ui/components/navbar.djhtml" %}
 {% endblock body %}

@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from api.tmdb import tmdb_client
 from api.services import get_or_fetch_show, get_or_fetch_season
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def shows(req: HttpRequest, show_id: int) -> HttpResponse:
     show, seasons = get_or_fetch_show(series_id=show_id)
     return render(
@@ -13,6 +15,7 @@ def shows(req: HttpRequest, show_id: int) -> HttpResponse:
     )
 
 
+@login_required
 def season(req: HttpRequest, show_id: int, season_number: int) -> HttpResponse:
     season, episodes = get_or_fetch_season(
         series_id=show_id, season_number=season_number
@@ -24,10 +27,12 @@ def season(req: HttpRequest, show_id: int, season_number: int) -> HttpResponse:
     )
 
 
+@login_required
 def dashboard(req: HttpRequest) -> HttpResponse:
     return render(request=req, template_name="ui/dashboard/index.djhtml")
 
 
+@login_required
 def search(req: HttpRequest) -> HttpResponse:
     query = req.GET.get("q", "")
     res = tmdb_client.search_for_show(query)

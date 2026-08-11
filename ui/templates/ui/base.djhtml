@@ -14,7 +14,6 @@
         </title>
     </head>
     <body>
-        {% include "ui/components/navbar.djhtml" %}
         {% block body %}
         {% endblock body %}
     </body>
