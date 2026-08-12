@@ -14,7 +14,6 @@
                     <h1 class="text-sm">{{ show.number_of_episodes }} episodes</h1>
                 </div>
                 {% include "ui/shows/rating.djhtml" %}
-                <c-ui.shows.rating />
             </div>
             <p class="bg-base-200 p-4">{{ show.overview }}</p>
             {% include "ui/shows/tabs.djhtml" %}

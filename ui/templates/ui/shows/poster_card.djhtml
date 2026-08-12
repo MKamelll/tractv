@@ -1,12 +1,54 @@
-<div class="card bg-base-200 w-96 shadow-sm">
+<div x-data="card_actions({{ curr_status }})"
+     class="card bg-base-200 w-96 shadow-sm">
     {% if show.poster_path %}
-        <figure>
-            <img src={{ show.poster_path }} alt="show poster" />
+        <figure class="p-4">
+            <img src="{{ show.poster_path }}" class="w-300 h-auto" alt="show poster" />
         </figure>
     {% endif %}
     <div class="card-body">
-        <div class="card-actions justify-end">
-            <button class="btn btn-primary">Add To Watchlist</button>
-        </div>
+        <form class="card-actions flex-col gap-4">
+            {% csrf_token %}
+            <button x-on:htmx:after-request="on_watchlist_response($event)"
+                    x-bind:class="watchlist ? btn_success : btn_initial"
+                    hx-swap="none"
+                    hx-post="{% url 'status_update' show.id 'watchlist' %}">Watchlist</button>
+            <button x-on:htmx:after-request="on_completed_response($event)"
+                    x-bind:class="completed ? btn_success : btn_initial"
+                    hx-swap="none"
+                    hx-post="{% url 'status_update' show.id 'completed' %}">Completed</button>
+            <button x-on:htmx:after-request="on_watching_response($event)"
+                    x-bind:class="watching ? btn_success : btn_initial"
+                    hx-swap="none"
+                    hx-post="{% url 'status_update' show.id 'watching' %}">Watching</button>
+        </form>
     </div>
 </div>
+<script>
+    function card_actions(curr_status) {
+        return {
+            watchlist: curr_status === "watchlist",
+            completed: curr_status === "completed",
+            watching: curr_status === "watching",
+            btn_success: "btn btn-outline bg-success w-full",
+            btn_initial: "btn btn-outline w-full",
+            on_watchlist_response(event) {
+                if (!event.detail.successful) return;
+                this.watchlist = !this.watchlist;
+                this.completed = false;
+                this.watching = false;
+            },
+            on_completed_response(event) {
+                if (!event.detail.successful) return;
+                this.completed = !this.completed;
+                this.watchlist = false;
+                this.watching = false;
+            },
+            on_watching_response(event) {
+                if (!event.detail.successful) return;
+                this.watching = !this.watching;
+                this.watchlist = false;
+                this.completed = false;
+            }
+        }
+    }
+</script>

@@ -11,7 +11,7 @@ def shows(req: HttpRequest, show_id: int) -> HttpResponse:
     return render(
         request=req,
         template_name="ui/shows/index.djhtml",
-        context={"show": show, "seasons": seasons},
+        context={"show": show, "seasons": seasons, "status": "none"},
     )
 
 
@@ -48,3 +48,8 @@ def search(req: HttpRequest) -> HttpResponse:
             template_name="ui/partials/search_results.djhtml",
             context={"query": query},
         )
+
+
+@login_required
+def status_update(req: HttpRequest, show_id: int, status: str) -> HttpResponse:
+    return HttpResponse()
