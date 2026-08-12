@@ -3,15 +3,17 @@ from django.http import HttpRequest, HttpResponse
 from api.tmdb import tmdb_client
 from api.services import get_or_fetch_show, get_or_fetch_season
 from django.contrib.auth.decorators import login_required
+from profiles.services import update_or_create_watch_status, get_watch_status
 
 
 @login_required
 def shows(req: HttpRequest, show_id: int) -> HttpResponse:
     show, seasons = get_or_fetch_show(series_id=show_id)
+    status = get_watch_status(request=req, show_id=show.id) or "none"
     return render(
         request=req,
         template_name="ui/shows/index.djhtml",
-        context={"show": show, "seasons": seasons, "status": "none"},
+        context={"show": show, "seasons": seasons, "status": status},
     )
 
 
@@ -52,4 +54,8 @@ def search(req: HttpRequest) -> HttpResponse:
 
 @login_required
 def status_update(req: HttpRequest, show_id: int, status: str) -> HttpResponse:
-    return HttpResponse()
+    try:
+        update_or_create_watch_status(request=req, show_id=show_id, status=status)
+        return HttpResponse(status=200)
+    except:
+        return HttpResponse(status=500)

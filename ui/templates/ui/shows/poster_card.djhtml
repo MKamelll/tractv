@@ -1,4 +1,4 @@
-<div x-data="card_actions({{ curr_status }})"
+<div x-data="card_actions('{{ status }}')"
      class="card bg-base-200 w-96 shadow-sm">
     {% if show.poster_path %}
         <figure class="p-4">
@@ -24,11 +24,11 @@
     </div>
 </div>
 <script>
-    function card_actions(curr_status) {
+    function card_actions(status) {
         return {
-            watchlist: curr_status === "watchlist",
-            completed: curr_status === "completed",
-            watching: curr_status === "watching",
+            watchlist: status === "watchlist",
+            completed: status === "completed",
+            watching: status === "watching",
             btn_success: "btn btn-outline bg-success w-full",
             btn_initial: "btn btn-outline w-full",
             on_watchlist_response(event) {
