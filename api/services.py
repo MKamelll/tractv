@@ -46,14 +46,15 @@ def get_or_fetch_show(series_id: int) -> tuple[models.Show, list[models.Season]]
 
 def get_or_fetch_season(
     series_id: int, season_number: int
-) -> tuple[models.Season, list[models.Episode]]:
+) -> tuple[models.Season, list[models.Episode], bool]:
     show, seasons = get_or_fetch_show(series_id=series_id)
     season = seasons[season_number] if 0 <= season_number < len(seasons) else None
     if not season:
         raise ServiceException("fuck off, this season isn't even real")
+    created_episodes = False
     episodes = list(models.Episode.objects.filter(season=season).filter(show=show))
     if len(episodes) > 0:
-        return (season, episodes)
+        return (season, episodes, created_episodes)
     res = tmdb_client.get_season_details(
         series_id=show.tmdb_id, season_number=season_number
     )
@@ -73,7 +74,8 @@ def get_or_fetch_season(
         for e in res.episodes
     ]
     models.Episode.objects.bulk_create(new_episodes)
-    return (season, new_episodes)
+    created_episodes = True
+    return (season, new_episodes, created_episodes)
 
 
 def get_show_episodes_ids(series_id: int) -> list[int]:

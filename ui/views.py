@@ -7,6 +7,7 @@ from profiles.services import (
     update_or_create_watch_status,
     get_show_watch_status,
     get_season_watch_status,
+    mark_episodes_watched,
 )
 
 
@@ -23,9 +24,15 @@ def shows(req: HttpRequest, show_id: int) -> HttpResponse:
 
 @login_required
 def season(req: HttpRequest, show_id: int, season_number: int) -> HttpResponse:
-    season, episodes = get_or_fetch_season(
+    season, episodes, created_episodes = get_or_fetch_season(
         series_id=show_id, season_number=season_number
     )
+    show_watch_status = get_show_watch_status(profile=req.user.profile, show_id=show_id)
+    is_show_completed = (
+        show_watch_status is not None and show_watch_status == "completed"
+    )
+    if created_episodes and is_show_completed:
+        mark_episodes_watched(profile=req.user.profile, ids=[e.id for e in episodes])
     episodes_watches = get_season_watch_status(
         profile=req.user.profile, show_id=show_id, season_number=season_number
     )

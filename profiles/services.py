@@ -41,8 +41,14 @@ def is_episode_watched(profile: Profile, episode_id: int) -> bool:
 def get_season_watch_status(
     profile: Profile, show_id: int, season_number: int
 ) -> list[int]:
-    _, episodes = get_or_fetch_season(series_id=show_id, season_number=season_number)
+    _, episodes, _ = get_or_fetch_season(series_id=show_id, season_number=season_number)
     episodes_watches = EpisodeWatch.objects.filter(
         episode__in=episodes, profile=profile
     ).select_related("episode")
     return [w.episode.id for w in episodes_watches]
+
+
+def mark_episodes_watched(profile: Profile, ids: list[int]) -> None:
+    EpisodeWatch.objects.bulk_create(
+        [EpisodeWatch(profile=profile, episode_id=id) for id in ids]
+    )
