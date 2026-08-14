@@ -1,4 +1,4 @@
-<div x-data="episode_data({{ episode_watch_status }})"
+<div x-data="episode_data({% if episode.id in watches %}true{% else %}false{% endif %})"
      class="flex flex-row gap-4 h-full w-full items-start flex-1">
     {% if episode.still_path %}
         <img src="{{ episode.still_path }}"
@@ -9,8 +9,9 @@
         <h1 class="text-xl font-serif">{{ episode.name }}</h1>
         <p class="text-sm">{{ episode.overview }}</p>
     </div>
-    <button class="btn btn-circle btn-outline border-2 border-primary-content"
-            x-bind:class="marked_watched ? 'bg-success' : 'bg-none'">
+    <button class="btn btn-circle"
+            x-bind:class="marked_watched ? btn_success : btn_initial"
+            x-on:show-completed.window="marked_watched = $event.detail.status">
         <svg xmlns="http://www.w3.org/2000/svg"
              fill="none"
              viewBox="0 0 24 24"
@@ -33,7 +34,9 @@
 <script>
     function episode_data(status) {
         return {
-            marked_watched: status
+            marked_watched: status,
+            btn_success: "btn bg-success",
+            btn_initial: "btn btn-outline border-primary",
         }
     }
 </script>

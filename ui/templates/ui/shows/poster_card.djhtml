@@ -12,7 +12,7 @@
                     x-bind:class="watchlist ? btn_success : btn_initial"
                     hx-swap="none"
                     hx-post="{% url 'status_update' show.id 'watchlist' %}">Watchlist</button>
-            <button x-on:htmx:after-request="on_completed_response($event)"
+            <button x-on:htmx:after-request="on_completed_response($event, $dispatch)"
                     x-bind:class="completed ? btn_success : btn_initial"
                     hx-swap="none"
                     hx-post="{% url 'status_update' show.id 'completed' %}">Completed</button>
@@ -29,17 +29,18 @@
             watchlist: status === "watchlist",
             completed: status === "completed",
             watching: status === "watching",
-            btn_success: "btn btn-outline bg-success w-full",
-            btn_initial: "btn btn-outline w-full",
+            btn_success: "btn bg-success w-full",
+            btn_initial: "btn btn-outline border-primary w-full",
             on_watchlist_response(event) {
                 if (!event.detail.successful) return;
                 this.watchlist = !this.watchlist;
                 this.completed = false;
                 this.watching = false;
             },
-            on_completed_response(event) {
+            on_completed_response(event, dispatch) {
                 if (!event.detail.successful) return;
                 this.completed = !this.completed;
+                dispatch("show-completed", {status: this.completed});
                 this.watchlist = false;
                 this.watching = false;
             },

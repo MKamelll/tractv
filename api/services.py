@@ -74,3 +74,9 @@ def get_or_fetch_season(
     ]
     models.Episode.objects.bulk_create(new_episodes)
     return (season, new_episodes)
+
+
+def get_show_episodes_ids(series_id: int) -> list[int]:
+    return list(
+        models.Episode.objects.filter(show_id=series_id).values_list("id", flat=True)
+    )
